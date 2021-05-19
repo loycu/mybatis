@@ -1,0 +1,20 @@
+<!--根据公司id批量更新业务汇率-->
+    <update id="updateFinCurrencyByCompanyID" >
+        update  erp_biz_1.fin_currency case CUR_CODE
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="e.CUR_VALUE=case" suffix="end,">
+                <foreach collection="list" item="e" index="index">
+                    <if test="e.CUR_VALUE!=null">
+                        when CUR_CODE=#{e.CUR_CODE} then #{e.CUR_VALUE}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+    where com_uid = #{companyID} and
+        <foreach collection="list" separator="or" item="e" index="index" >
+        id=#{e.CUR_CODE}
+        </foreach>
+    </update>
+    
+    
+    refrence:https://www.cnblogs.com/joeblackzqq/p/10892699.html

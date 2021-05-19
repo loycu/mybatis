@@ -15,6 +15,21 @@
         id=#{e.CUR_CODE}
         </foreach>
     </update>
+    https://www.cnblogs.com/joeblackzqq/p/10892699.html
     
-    
-    refrence:https://www.cnblogs.com/joeblackzqq/p/10892699.html
+      批量更新测试
+  <update id="updateByBatch" parameterType="java.util.List">
+    update t_goods
+    set NODE_ID=
+    <foreach collection="list" item="item" index="index"
+             separator=" " open="case" close="end">
+      when GOODS_ID=#{item.goodsId} then #{item.nodeId}
+    </foreach>
+    where GOODS_ID in
+    <foreach collection="list" index="index" item="item"
+             separator="," open="(" close=")">
+      #{item.goodsId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+    https://www.jianshu.com/p/041bec8ae6d3
+   

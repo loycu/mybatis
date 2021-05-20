@@ -1,3 +1,14 @@
+ <!--update cur_value if record key conflict-->
+    <update id="updateFinCurrencyByCompanyID">
+        INSERT INTO fin_currency
+            (COM_UID,CUR_CODE,CUR_VALUE) VALUES
+            <foreach collection="list" separator=","  item="e">
+                (#{companyID},#{e.curCode},#{e.curValue})
+            </foreach>
+            ON DUPLICATE KEY UPDATE
+        CUR_VALUE=VALUES(CUR_VALUE)
+    </update>
+
 <!--根据公司id批量更新业务汇率-->
     <update id="updateFinCurrencyByCompanyID" >
         update  erp_biz_1.fin_currency case CUR_CODE
@@ -35,4 +46,5 @@
     
     https://stackoverflow.com/questions/3432/multiple-updates-in-mysql/39831043#39831043
     https://stackoverflow.com/questions/3432/multiple-updates-in-mysql
+    https://developpaper.com/three-ways-to-batch-update-mybatis/
    
